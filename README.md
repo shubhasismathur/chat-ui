@@ -2,6 +2,19 @@
 
 A modern AI-powered chat interface built with Python, Streamlit, and Azure OpenAI.
 
+## Screenshots
+
+![Chat UI Interface](docs/chat-ui-screenshot.png)
+
+*The clean, modern interface showing the AI chat assistant in action with Azure OpenAI integration*
+
+### Key UI Elements:
+- **🟢 Connection Status**: Green indicator showing successful Azure OpenAI connection
+- **💬 Chat Interface**: Clean message bubbles for user and AI responses  
+- **🎯 Sidebar Controls**: Clear chat button and application information
+- **⚡ Input Field**: "What's on your mind?" prompt for user queries
+- **🤖 AI Responses**: Intelligent responses powered by Azure OpenAI
+
 ## Features
 
 - 🤖 **AI-Powered Responses** - Integrated with Azure OpenAI for intelligent conversations
