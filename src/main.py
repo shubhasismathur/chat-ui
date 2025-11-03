@@ -6,6 +6,7 @@ from utils import (
     get_chat_history,
     clear_chat_history
 )
+from azure_openai_service import azure_openai_service
 
 def setup_page():
     """Configure the Streamlit page."""
@@ -20,12 +21,23 @@ def setup_sidebar():
     """Setup the sidebar with controls."""
     with st.sidebar:
         st.title("Chat Bot Settings")
+        
+        # Display Azure OpenAI status
+        if azure_openai_service and azure_openai_service.is_configured():
+            st.success("🟢 Azure OpenAI Connected")
+        else:
+            st.error("🔴 Azure OpenAI Not Connected")
+        
+        st.markdown("---")
+        
         if st.button("Clear Chat"):
             clear_chat_history()
+            
         st.markdown("---")
         st.markdown("""
         ### About
-        This is a chat interface built with:
+        This is an AI chat interface powered by:
+        - Azure OpenAI
         - Streamlit
         - Python
         - ❤️
@@ -47,12 +59,18 @@ def handle_user_input():
         with st.chat_message("user"):
             st.markdown(prompt)
         
-        # Here you would typically make an API call to get the bot's response
-        # For now, we'll just echo the message
+        # Generate response using Azure OpenAI
         with st.chat_message("assistant"):
-            response = f"You said: {prompt}"
-            st.markdown(response)
-            add_message("assistant", response)
+            with st.spinner("Thinking..."):
+                if azure_openai_service and azure_openai_service.is_configured():
+                    # Get conversation history for context
+                    chat_history = get_chat_history()
+                    response = azure_openai_service.generate_response(prompt, chat_history)
+                else:
+                    response = "I'm sorry, Azure OpenAI is not properly configured. Please check your settings."
+                
+                st.markdown(response)
+                add_message("assistant", response)
 
 def main():
     """Main application function."""
@@ -60,7 +78,8 @@ def main():
     initialize_session_state()
     setup_sidebar()
     
-    st.title("💬 Chat Bot UI")
+    st.title("🤖 AI Chat Assistant")
+    st.markdown("*Powered by Azure OpenAI*")
     st.markdown("---")
     
     display_chat_history()
