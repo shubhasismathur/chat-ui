@@ -30,7 +30,39 @@ A modern AI-powered chat interface built with Python, Streamlit, and Azure OpenA
 - Azure OpenAI resource with deployed model
 - Git (for cloning the repository)
 
-## Quick Setup
+## 🚀 Quick Start
+
+### Option 1: Docker (Recommended for Production)
+
+#### Using Pre-built Image
+```bash
+# Run directly from registry
+docker run -d \
+  --name ai-chat-assistant \
+  -p 8501:8501 \
+  -e AZURE_OPENAI_ENDPOINT="your_endpoint_here" \
+  -e AZURE_OPENAI_API_KEY="your_api_key_here" \
+  -e AZURE_OPENAI_API_VERSION="2025-01-01-preview" \
+  -e AZURE_OPENAI_DEPLOYMENT_NAME="your_deployment_name" \
+  username/ai-chat-assistant:latest
+```
+
+#### Building from Source
+1. **Clone the repository:**
+```bash
+git clone https://github.com/shubhasismathur/chat-ui.git
+cd chat-ui
+```
+
+2. **Build and run with Docker:**
+```bash
+docker build -t ai-chat-assistant .
+docker run -d -p 8501:8501 [environment variables] ai-chat-assistant
+```
+
+📖 **[Complete Container Deployment Guide](CONTAINER_GUIDE.md)**
+
+### Option 2: Local Development Setup
 
 1. **Clone the repository:**
 ```bash
@@ -102,10 +134,14 @@ chat-ui/
 │   ├── main.py                 # Main Streamlit application
 │   ├── utils.py               # Utility functions for session management
 │   └── azure_openai_service.py # Azure OpenAI integration service
+├── docs/                      # Documentation and screenshots
 ├── requirements.txt           # Python dependencies
 ├── .env.example              # Example environment configuration
 ├── .gitignore               # Git ignore rules
-└── README.md               # This file
+├── Dockerfile               # Container build configuration
+├── .dockerignore           # Docker build exclusions
+├── CONTAINER_GUIDE.md      # Complete containerization guide
+└── README.md              # This file
 ```
 
 ## Usage
