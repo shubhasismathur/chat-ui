@@ -18,11 +18,13 @@ A modern AI-powered chat interface built with Python, Streamlit, and Azure OpenA
 ## Features
 
 - 🤖 **AI-Powered Responses** - Integrated with Azure OpenAI for intelligent conversations
+- 🎯 **Configurable AI Behavior** - Custom system messages to restrict AI to specific topics (e.g., Kubernetes-only)
 - 💬 **Clean Chat Interface** - Modern, responsive design with message bubbles
 - 📝 **Conversation History** - Maintains context throughout the chat session
 - 🔒 **Secure Configuration** - Environment-based API key management
 - ⚡ **Real-time Responses** - Fast, streaming-like experience with loading indicators
 - 🎨 **Customizable UI** - Easy to modify styling and branding
+- 🚀 **Quick Presets** - Pre-configured system messages for common use cases
 
 ## Prerequisites
 
@@ -97,6 +99,8 @@ AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
 AZURE_OPENAI_API_KEY=your_api_key_here
 AZURE_OPENAI_API_VERSION=2025-01-01-preview
 AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+# Optional: Custom system message for AI behavior
+AZURE_OPENAI_SYSTEM_MESSAGE=You are a helpful AI assistant specialized in Kubernetes.
 ```
 
 6. **Run the application:**
@@ -116,6 +120,7 @@ streamlit run src/main.py
 | `AZURE_OPENAI_API_KEY` | Your Azure OpenAI API key | `abc123...` |
 | `AZURE_OPENAI_API_VERSION` | API version to use | `2025-01-01-preview` |
 | `AZURE_OPENAI_DEPLOYMENT_NAME` | Your model deployment name | `gpt-4` or `gpt-35-turbo` |
+| `AZURE_OPENAI_SYSTEM_MESSAGE` | Custom system message to define AI behavior | `You are an AI assistant specialized in Kubernetes...` |
 
 ### Supported Models
 
@@ -125,6 +130,45 @@ This application has been tested with:
 - GPT-4o-mini
 
 **Note:** Some models like `gpt-5-mini` may have parameter restrictions. The application automatically adjusts for model compatibility.
+
+## 🎯 Customizing AI Behavior
+
+### System Message Configuration
+
+You can customize the AI's behavior and restrict it to specific topics using system messages. This allows you to create specialized chatbots (e.g., Kubernetes-only, Cloud computing, Programming assistance).
+
+#### Method 1: Environment Variable
+Set the `AZURE_OPENAI_SYSTEM_MESSAGE` in your `.env` file:
+
+```env
+# Example: Kubernetes-only assistant
+AZURE_OPENAI_SYSTEM_MESSAGE=You are an AI assistant specialized in Kubernetes. Only answer questions related to Kubernetes, container orchestration, Docker, and cloud-native technologies. If asked about unrelated topics, politely redirect the conversation back to Kubernetes.
+
+# Example: Cloud computing assistant
+AZURE_OPENAI_SYSTEM_MESSAGE=You are an AI assistant specialized in cloud computing. Focus on topics related to AWS, Azure, Google Cloud, cloud architecture, DevOps, and infrastructure.
+```
+
+#### Method 2: Runtime Configuration
+Use the sidebar in the application to:
+- **Custom Text Area**: Write your own system message
+- **Quick Presets**: Choose from pre-configured options:
+  - 🤖 **General**: Standard helpful assistant
+  - ☸️ **Kubernetes**: Kubernetes and container orchestration specialist
+  - ☁️ **Cloud**: Cloud computing and DevOps expert
+  - 💻 **Code**: Programming and development assistant
+
+#### Example System Messages
+
+```bash
+# Kubernetes Specialist
+"You are an AI assistant specialized in Kubernetes. Only answer questions related to Kubernetes, container orchestration, Docker, and cloud-native technologies."
+
+# Security Expert
+"You are a cybersecurity expert. Focus on security best practices, threat analysis, and protective measures. Always prioritize security in your recommendations."
+
+# Code Reviewer
+"You are a senior software engineer focused on code review. Analyze code for best practices, performance, security issues, and maintainability."
+```
 
 ## Project Structure
 

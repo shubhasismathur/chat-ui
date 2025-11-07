@@ -25,6 +25,9 @@ class AzureOpenAIService:
         self.api_key = os.getenv("AZURE_OPENAI_API_KEY")
         self.api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview")
         self.deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-35-turbo")
+        # Load custom system message from environment variable
+        self.system_message = os.getenv("AZURE_OPENAI_SYSTEM_MESSAGE", 
+                                       "You are a helpful AI assistant. Provide clear, concise, and helpful responses related to Kubernetes only.")
         
         # Debug logging
         logger.info(f"Loading Azure OpenAI configuration:")
@@ -32,6 +35,7 @@ class AzureOpenAIService:
         logger.info(f"API Key: {'***' + self.api_key[-4:] if self.api_key else 'None'}")
         logger.info(f"API Version: {self.api_version}")
         logger.info(f"Deployment: {self.deployment_name}")
+        logger.info(f"System Message: {self.system_message[:50]}{'...' if len(self.system_message) > 50 else ''}")
         
         # Validate required configuration
         if not self.endpoint or not self.api_key:
@@ -70,10 +74,10 @@ class AzureOpenAIService:
             # Prepare messages for the API
             messages = []
             
-            # Add system message for context
+            # Add system message for context (now configurable)
             messages.append({
                 "role": "system",
-                "content": "You are a helpful AI assistant. Provide clear, concise, and helpful responses."
+                "content": self.system_message
             })
             
             # Add conversation history if provided
